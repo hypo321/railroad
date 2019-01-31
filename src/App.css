@@ -1,0 +1,332 @@
+.App {
+  text-align: center;
+}
+.btn {
+  /* default for <button>, but useful for <a> */
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+
+  /* create a small space when buttons wrap on 2 lines */
+  margin: 4px 4px;
+
+  /* invisible border (will be colored on hover/focus) */
+  border: solid 1px transparent;
+  border-radius: 4px;
+
+  /* size comes from text & padding (no width/height) */
+  padding: 0.5em 1em;
+  /* width: 100%; */
+
+  /* make sure colors have enough contrast! */
+  color: #ffffff;
+  background-color: #ca2a52;
+  font-family: "Cabin", sans-serif;
+  font-size: 0.7em;
+  font-weight: bold;
+}
+
+.btnNext {
+  /* default for <button>, but useful for <a> */
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+
+  /* create a small space when buttons wrap on 2 lines */
+  margin: 4px 4px;
+
+  /* invisible border (will be colored on hover/focus) */
+  border: solid 1px transparent;
+  border-radius: 4px;
+
+  /* size comes from text & padding (no width/height) */
+  padding: 0.5em 1em;
+  /* width: 100%; */
+
+  /* make sure colors have enough contrast! */
+  color: #ffffff;
+  background-color: #249ebd;
+  font-family: "Cabin", sans-serif;
+  font-size: 0.7em;
+  font-weight: bold;
+}
+
+body {
+  font-family: "Cabin", sans-serif;
+  user-select: none;
+  height: 100%;
+  /* overflow: hidden; */
+  overscroll-behavior-y: none;
+}
+
+​ .Dice {
+  display: inline-block;
+}
+
+canvas {
+  width: 600px;
+  height: 900px;
+  background-image: url("/images/RRI-board.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+span.roundNumber {
+  position: absolute;
+  top: 0.1em;
+  right: 0.5em;
+  z-index: 3;
+  color: red;
+  font-family: "Cabin", sans-serif;
+  font-size: 0.7em;
+  font-weight: bold;
+}
+
+span.above {
+  position: absolute;
+  top: -0.5em;
+  left: 25%;
+  z-index: 3;
+  color: red;
+  font-family: "Cabin", sans-serif;
+  font-size: 2em;
+}
+span.below {
+  position: absolute;
+  bottom: -0.5em;
+  left: 25%;
+  z-index: 3;
+  color: red;
+  font-family: "Cabin", sans-serif;
+  font-size: 2em;
+}
+span.right {
+  position: absolute;
+  top: 10%;
+  right: -0.4em;
+  z-index: 3;
+  color: red;
+  font-family: "Cabin", sans-serif;
+  font-size: 2em;
+}
+span.left {
+  position: absolute;
+  top: 10%;
+  left: -0.4em;
+  z-index: 3;
+  color: red;
+  font-family: "Cabin", sans-serif;
+  font-size: 2em;
+}
+
+.imgCell {
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  /* background-color: blue; */
+}
+.imgBlank {
+  display: none;
+  width: 100%;
+  height: 100%;
+  /* background-color: blue; */
+}
+
+.gridCell {
+  position: relative;
+  width: 78px;
+  height: 78px;
+  margin: 0px;
+  padding: 0px;
+  display: inline-block;
+  /* width: 80px;
+  height: 80px; */
+}
+
+.validCell {
+  /* border: 1px solid green; */
+  filter: sepia(90%) hue-rotate(50deg) saturate(400%);
+  display: inline-block;
+  border-radius: 12px;
+}
+.Grid {
+  position: absolute;
+  top: 323px;
+  left: 77px;
+  /* background-color: blue; */
+}
+.gridRow {
+  height: 78px;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  display: block;
+  /* background-color: white; */
+
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.gridDiv {
+  min-height: 20vh;
+  /* height: 100%;
+  width: 100%; */
+  display: block;
+  /* flex-direction: row; */
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 20vh;
+  /* height: 100%; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.Game {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* height: 100%; */
+}
+
+.Board {
+  display: inline-block;
+  width: 700px;
+  position: relative;
+}
+
+button {
+  padding: 10px;
+  background-color: #aaa;
+}
+
+.scoring {
+  z-index: 5;
+  color: red;
+  font-family: "Cabin", sans-serif;
+  font-size: 0.7em;
+  font-weight: bold;
+  display: inline-block;
+  position: absolute;
+  padding: 2px;
+  top: 192px;
+  left: 445px;
+  width: 25px;
+  height: 25px;
+  z-index: 200;
+  /* border: 1px solid black; */
+}
+
+.connections {
+  left: 125px;
+}
+.longestroad {
+  left: 204px;
+}
+.longestrail {
+  left: 286px;
+}
+.middletile {
+  left: 367px;
+}
+
+.deadend {
+  left: 447px;
+}
+.expansions {
+  left: 525px;
+}
+.total {
+  left: 588px;
+}
+
+.tile {
+  border-radius: 12px;
+  display: inline-block;
+  position: absolute;
+  top: 12px;
+  left: 76px;
+  width: 80px;
+  height: 80px;
+  z-index: 200;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.controlButtons {
+  height: 20vh;
+}
+
+.disabled {
+  filter: brightness(50%);
+}
+
+.tile10 {
+  left: 74px;
+  background-image: url("/images/RRI-10.png");
+}
+
+.tile11 {
+  left: 169px;
+  background-image: url("/images/RRI-11.png");
+}
+
+.tile12 {
+  left: 261px;
+  background-image: url("/images/RRI-12.png");
+}
+
+.tile13 {
+  left: 355px;
+  background-image: url("/images/RRI-13.png");
+}
+
+.tile14 {
+  left: 448px;
+  background-image: url("/images/RRI-14.png");
+}
+
+.tile15 {
+  left: 542px;
+  background-image: url("/images/RRI-15.png");
+}
+
+.tile16 {
+  left: 500px;
+  background-image: url("/images/RRI-6.png");
+}
+
+.tile7 {
+  left: 443px;
+  background-image: url("/images/RRI-7.png");
+}
+
+.tile8 {
+  left: 504px;
+  background-image: url("/images/RRI-8.png");
+}
+
+.tile9 {
+  left: 567px;
+  background-image: url("/images/RRI-9.png");
+}
