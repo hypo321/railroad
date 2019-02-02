@@ -1,4 +1,9 @@
-import { findEndPoints, longestRoad, longestRail } from "./Board_utils";
+import {
+  findEndPoints,
+  longestRoad,
+  longestRail,
+  longestPath
+} from "./Board_utils";
 
 const checkMiddleTiles = gridData => {
   let filteredRows = gridData.filter(
@@ -62,13 +67,11 @@ const updateScores = (gridData, setState) => {
             if (colIndex === 0 || colIndex === 8) {
               return 0;
             } else {
-              console.log(
-                longestRoad(gridData, rowIndex, colIndex, "", 0, []) &&
-                  longestRoad(gridData, rowIndex, colIndex, "", 0, []).list
-              );
+              // if (colIndex === 4 && rowIndex === 7) debugger;
+              console.log(longestPath(gridData, rowIndex, colIndex));
               return traverse(
-                longestRoad(gridData, rowIndex, colIndex, "", 0, []) &&
-                  longestRoad(gridData, rowIndex, colIndex, "", 0, []).path,
+                longestPath(gridData, rowIndex, colIndex) &&
+                  longestPath(gridData, rowIndex, colIndex).path,
                 0
               );
             }
@@ -77,7 +80,7 @@ const updateScores = (gridData, setState) => {
       })
     );
     //debugger;
-    let debug = longestRoad(gridData, 1, 3, "", 0, []);
+    let debug = longestPath(gridData, 1, 3, "", 0, []);
 
     scores.road = gridData
       .map((row, rowIndex) => {
@@ -90,8 +93,8 @@ const updateScores = (gridData, setState) => {
                 return 0;
               } else {
                 return traverse(
-                  longestRoad(gridData, rowIndex, colIndex, "", 0, []) &&
-                    longestRoad(gridData, rowIndex, colIndex, "", 0, []).path,
+                  longestPath(gridData, rowIndex, colIndex) &&
+                    longestPath(gridData, rowIndex, colIndex).path,
                   1
                 );
               }
@@ -112,7 +115,7 @@ const updateScores = (gridData, setState) => {
                 return 0;
               } else {
                 return traverse(
-                  longestRail(gridData, rowIndex, colIndex, "", 0),
+                  longestPath(gridData, rowIndex, colIndex, "", 0, [], "rail"),
                   1
                 );
               }
