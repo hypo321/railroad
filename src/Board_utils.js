@@ -536,8 +536,10 @@ const completePath = (
   if (
     list.filter(cell => cell.x === colIndex && cell.y === rowIndex).length > 0
   ) {
-    // console.log(rowIndex + ":" + colIndex, "Found previously visited tile");
-    return { path: null, list: list };
+    if (tile.type !== 7) {
+      // console.log(rowIndex + ":" + colIndex, "Found previously visited tile");
+      return { path: null, list: list };
+    }
   }
 
   let exits = isValid(
@@ -554,7 +556,7 @@ const completePath = (
     return { path: null, list: list };
   }
 
-  list.push({ x: colIndex, y: rowIndex, depth, source });
+  list.push({ x: colIndex, y: rowIndex, depth, source, type: tile.type });
 
   list.length = depth;
 
@@ -619,81 +621,174 @@ const completePath = (
   // }
   let lp = null;
   //debugger;
-  if (
-    exits.match.above === exitFromTile(tile, "north") &&
-    exits.match.above !== "blank"
-  ) {
-    if (source !== "above") {
-      // && rowIndex > 1) {
-      //  console.log("found above");
-      // if (rowIndex === 0) {
-      //   path.push({ x: colIndex, y: rowIndex, direction: "edge-below" });
-      //   return path;
-      // }
-      //path.push({ x: colIndex, y: rowIndex, direction: "below" });
+  if (tile.type === 7) {
+    if (
+      exits.match.above === exitFromTile(tile, "north") &&
+      exits.match.above !== "blank"
+    ) {
+      if (source === "below") {
+        // && rowIndex > 1) {
+        //  console.log("found above");
+        // if (rowIndex === 0) {
+        //   path.push({ x: colIndex, y: rowIndex, direction: "edge-below" });
+        //   return path;
+        // }
+        //path.push({ x: colIndex, y: rowIndex, direction: "below" });
 
-      lp = completePath(gridData, rowIndex - 1, colIndex, "below", depth, list);
+        lp = completePath(
+          gridData,
+          rowIndex - 1,
+          colIndex,
+          "below",
+          depth,
+          list
+        );
 
-      path.above = lp.path;
-      list = lp.list;
+        path.above = lp.path;
+        list = lp.list;
+      }
+    }
+    list.length = depth;
+    if (
+      exits.match.right === exitFromTile(tile, "east") &&
+      exits.match.right !== "blank"
+    ) {
+      if (source === "left") {
+        lp = completePath(
+          gridData,
+          rowIndex,
+          colIndex + 1,
+          "left",
+          depth,
+          list
+        );
+
+        path.right = lp.path;
+        list = lp.list;
+      }
+    }
+    list.length = depth;
+    if (
+      exits.match.below === exitFromTile(tile, "south") &&
+      exits.match.below !== "blank"
+    ) {
+      if (source === "above") {
+        lp = completePath(
+          gridData,
+          rowIndex + 1,
+          colIndex,
+          "above",
+          depth,
+          list
+        );
+
+        path.below = lp.path;
+        list = lp.list;
+      }
+    }
+    list.length = depth;
+    if (
+      exits.match.left === exitFromTile(tile, "west") &&
+      exits.match.left !== "blank"
+    ) {
+      if (source === "right") {
+        lp = completePath(
+          gridData,
+          rowIndex,
+          colIndex - 1,
+          "right",
+          depth,
+          list
+        );
+        path.left = lp.path;
+        list = lp.list;
+      }
+    }
+  } else {
+    if (
+      exits.match.above === exitFromTile(tile, "north") &&
+      exits.match.above !== "blank"
+    ) {
+      if (source !== "above") {
+        // && rowIndex > 1) {
+        //  console.log("found above");
+        // if (rowIndex === 0) {
+        //   path.push({ x: colIndex, y: rowIndex, direction: "edge-below" });
+        //   return path;
+        // }
+        //path.push({ x: colIndex, y: rowIndex, direction: "below" });
+
+        lp = completePath(
+          gridData,
+          rowIndex - 1,
+          colIndex,
+          "below",
+          depth,
+          list
+        );
+
+        path.above = lp.path;
+        list = lp.list;
+      }
+    }
+    list.length = depth;
+    if (
+      exits.match.right === exitFromTile(tile, "east") &&
+      exits.match.right !== "blank"
+    ) {
+      if (source !== "right") {
+        lp = completePath(
+          gridData,
+          rowIndex,
+          colIndex + 1,
+          "left",
+          depth,
+          list
+        );
+
+        path.right = lp.path;
+        list = lp.list;
+      }
+    }
+    list.length = depth;
+    if (
+      exits.match.below === exitFromTile(tile, "south") &&
+      exits.match.below !== "blank"
+    ) {
+      if (source !== "below") {
+        lp = completePath(
+          gridData,
+          rowIndex + 1,
+          colIndex,
+          "above",
+          depth,
+          list
+        );
+
+        path.below = lp.path;
+        list = lp.list;
+      }
+    }
+    list.length = depth;
+    if (
+      exits.match.left === exitFromTile(tile, "west") &&
+      exits.match.left !== "blank"
+    ) {
+      if (source !== "left") {
+        lp = completePath(
+          gridData,
+          rowIndex,
+          colIndex - 1,
+          "right",
+          depth,
+          list
+        );
+        path.left = lp.path;
+        list = lp.list;
+      }
     }
   }
-  list.length = depth;
-  if (
-    exits.match.right === exitFromTile(tile, "east") &&
-    exits.match.right !== "blank"
-  ) {
-    if (source !== "right") {
-      // && colIndex < 7) { //
-      // console.log("found right");
-      // if (colIndex === 7) {
-      //   path.push({ x: colIndex, y: rowIndex, direction: "edge-left" });
-      //   return path;
-      // }
-      // path.push({ x: colIndex, y: rowIndex, direction: "left" });
-      lp = completePath(gridData, rowIndex, colIndex + 1, "left", depth, list);
 
-      path.right = lp.path;
-      list = lp.list;
-    }
-  }
-  list.length = depth;
-  if (
-    exits.match.below === exitFromTile(tile, "south") &&
-    exits.match.below !== "blank"
-  ) {
-    if (source !== "below") {
-      // && rowIndex < 7) {
-      //  console.log("found below");
-      // if (rowIndex === 7) {
-      //   path.push({ x: colIndex, y: rowIndex, direction: "edge-above" });
-      //   return path;
-      // }
-      // path.push({ x: colIndex, y: rowIndex, direction: "above" });
-      lp = completePath(gridData, rowIndex + 1, colIndex, "above", depth, list);
-
-      path.below = lp.path;
-      list = lp.list;
-    }
-  }
-  list.length = depth;
-  if (
-    exits.match.left === exitFromTile(tile, "west") &&
-    exits.match.left !== "blank"
-  ) {
-    if (source !== "left") {
-      // && colIndex > 1) {
-      //  console.log("found left");
-      // if (colIndex === 0) {
-      //   path.push({ x: colIndex, y: rowIndex, direction: "edge-right" });
-      //   return path;
-      // }
-      // path.push({ x: colIndex, y: rowIndex, direction: "right" });
-      lp = completePath(gridData, rowIndex, colIndex - 1, "right", depth, list);
-      path.left = lp.path;
-      list = lp.list;
-    }
-  }
   list.length = depth;
   //path.push({ x: colIndex, y: rowIndex, direction: "end" });
   return { path, list };

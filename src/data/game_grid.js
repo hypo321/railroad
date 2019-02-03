@@ -661,7 +661,7 @@ const gridPath = [
       round: 1
     },
     {
-      type: 7,
+      type: 15,
       rotation: 180,
       flipped: false,
       round: 1
