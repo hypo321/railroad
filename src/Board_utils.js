@@ -619,7 +619,10 @@ const completePath = (
   // }
   let lp = null;
   //debugger;
-  if (exits.match.above === exitFromTile(tile, "north")) {
+  if (
+    exits.match.above === exitFromTile(tile, "north") &&
+    exits.match.above !== "blank"
+  ) {
     if (source !== "above") {
       // && rowIndex > 1) {
       //  console.log("found above");
@@ -636,7 +639,10 @@ const completePath = (
     }
   }
   list.length = depth;
-  if (exits.match.right === exitFromTile(tile, "east")) {
+  if (
+    exits.match.right === exitFromTile(tile, "east") &&
+    exits.match.right !== "blank"
+  ) {
     if (source !== "right") {
       // && colIndex < 7) { //
       // console.log("found right");
@@ -652,7 +658,10 @@ const completePath = (
     }
   }
   list.length = depth;
-  if (exits.match.below === exitFromTile(tile, "south")) {
+  if (
+    exits.match.below === exitFromTile(tile, "south") &&
+    exits.match.below !== "blank"
+  ) {
     if (source !== "below") {
       // && rowIndex < 7) {
       //  console.log("found below");
@@ -668,7 +677,10 @@ const completePath = (
     }
   }
   list.length = depth;
-  if (exits.match.left === exitFromTile(tile, "west")) {
+  if (
+    exits.match.left === exitFromTile(tile, "west") &&
+    exits.match.left !== "blank"
+  ) {
     if (source !== "left") {
       // && colIndex > 1) {
       //  console.log("found left");

@@ -88,6 +88,7 @@ const updateScores = (gridData, setState) => {
     // let debug = completePath(gridData, 4, 7, "", 0, []);
 
     // console.log(debug);
+    //debugger;
     let exitPaths =
       gridData &&
       connectingExits
