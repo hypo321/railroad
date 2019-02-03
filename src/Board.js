@@ -108,7 +108,11 @@ class Grid extends Component {
                               "From Shadow x:" + rowIndex + ", y:" + colIndex
                             }
                             className={"imgBlank validCell"}
-                            src={"/images/RRI-" + shadowTile.tile + ".png"}
+                            src={
+                              "/images/transparent/RRI-" +
+                              shadowTile.tile +
+                              ".png"
+                            }
                             style={{
                               transform: transformString
                             }}
@@ -199,7 +203,7 @@ class Grid extends Component {
                           style={{
                             transform: transformString
                           }}
-                          src={"/images/RRI-" + tile.type + ".png"}
+                          src={"/images/transparent/RRI-" + tile.type + ".png"}
                         />
                         {deadEnds}
                       </div>
