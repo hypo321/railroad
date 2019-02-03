@@ -1,9 +1,14 @@
 import {
   findEndPoints,
-  longestRoad,
-  longestRail,
-  longestPath
+  // longestRoad,
+  // longestRail,
+  longestPath,
+  completePath
 } from "./Board_utils";
+
+import { connectingExits } from "./data/game_grid";
+
+const scoreLookup = [0, 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 45];
 
 const checkMiddleTiles = gridData => {
   let filteredRows = gridData.filter(
@@ -58,29 +63,64 @@ const updateScores = (gridData, setState) => {
     scores.middleTiles = checkMiddleTiles(gridData);
     scores.expansions = 0;
 
-    console.log(
-      gridData.map((row, rowIndex) => {
-        if (rowIndex === 0 || rowIndex === 8) {
-          return 0;
-        } else {
-          return row.map((cell, colIndex) => {
-            if (colIndex === 0 || colIndex === 8) {
-              return 0;
-            } else {
-              // if (colIndex === 4 && rowIndex === 7) debugger;
-              console.log(longestPath(gridData, rowIndex, colIndex));
-              return traverse(
-                longestPath(gridData, rowIndex, colIndex) &&
-                  longestPath(gridData, rowIndex, colIndex).path,
-                0
-              );
-            }
-          });
-        }
-      })
+    // console.log(
+    //   gridData.map((row, rowIndex) => {
+    //     if (rowIndex === 0 || rowIndex === 8) {
+    //       return 0;
+    //     } else {
+    //       return row.map((cell, colIndex) => {
+    //         if (colIndex === 0 || colIndex === 8) {
+    //           return 0;
+    //         } else {
+    //           // if (colIndex === 4 && rowIndex === 7) debugger;
+    //           console.log(longestPath(gridData, rowIndex, colIndex));
+    //           return traverse(
+    //             longestPath(gridData, rowIndex, colIndex) &&
+    //               longestPath(gridData, rowIndex, colIndex).path,
+    //             0
+    //           );
+    //         }
+    //       });
+    //     }
+    //   })
+    // );
+    // debugger;
+    // let debug = completePath(gridData, 4, 7, "", 0, []);
+
+    // console.log(debug);
+    let exitPaths =
+      gridData &&
+      connectingExits
+        .map(exit => {
+          return traverseExits(
+            completePath(gridData, exit.rowIndex, exit.colIndex, "", 0, []),
+            []
+          )
+            .sort()
+            .filter(function(item, pos, ary) {
+              return !pos || item != ary[pos - 1];
+            });
+        })
+        .filter(cell => cell.length > 1);
+    //.reduce((acc, item) => acc + "," + item)
+    //console.log(exitPaths);
+
+    let cleanPaths = exitPaths.map(exit =>
+      exit.reduce((acc, item) => acc + "," + item)
     );
-    //debugger;
-    let debug = longestPath(gridData, 1, 3, "", 0, []);
+    //console.log(cleanPaths);
+
+    let noDupes = cleanPaths.sort().filter(function(item, pos, ary) {
+      return !pos || item != ary[pos - 1];
+    });
+
+    let splitArray = noDupes.map(item => item.split(","));
+    console.log(splitArray);
+
+    scores.connections = edgeConnectionsScores(splitArray);
+
+    // let debug = completePath(gridData, 1, 2, "", 0, []);
+    // console.log({ debug });
 
     scores.road = gridData
       .map((row, rowIndex) => {
@@ -92,11 +132,8 @@ const updateScores = (gridData, setState) => {
               if (colIndex === 0 || colIndex === 8) {
                 return 0;
               } else {
-                return traverse(
-                  longestPath(gridData, rowIndex, colIndex) &&
-                    longestPath(gridData, rowIndex, colIndex).path,
-                  1
-                );
+                let lp = longestPath(gridData, rowIndex, colIndex);
+                return traverse(lp && lp.path, 1);
               }
             })
             .reduce((acc, item) => Math.max(acc, item), 0);
@@ -114,10 +151,16 @@ const updateScores = (gridData, setState) => {
               if (colIndex === 0 || colIndex === 8) {
                 return 0;
               } else {
-                return traverse(
-                  longestPath(gridData, rowIndex, colIndex, "", 0, [], "rail"),
-                  1
+                let lp = longestPath(
+                  gridData,
+                  rowIndex,
+                  colIndex,
+                  "",
+                  0,
+                  [],
+                  "rail"
                 );
+                return traverse(lp && lp.path, 1);
               }
             })
             .reduce((acc, item) => Math.max(acc, item), 0);
@@ -135,6 +178,10 @@ const updateScores = (gridData, setState) => {
   }
 };
 
+const edgeConnectionsScores = array => {
+  return array.reduce((acc, item) => acc + scoreLookup[item.length], 0);
+};
+
 const traverse = (obj, longest) => {
   let depth = 0;
   if (obj && typeof obj == "object") {
@@ -147,6 +194,25 @@ const traverse = (obj, longest) => {
     return Math.max(longest, depth);
   }
   return 0;
+};
+
+const traverseExits = (obj, list) => {
+  if (obj && typeof obj == "object") {
+    Object.entries(obj).forEach(([key, value]) => {
+      //debugger;
+      if (typeof value === "object") {
+        list = traverseExits(value, list);
+      } else if (
+        typeof value === "string" &&
+        value.substring(0, 4) === "edge"
+      ) {
+        //console.log(value, value.substring(0, 3));
+        list.push(value);
+      }
+    });
+    return list;
+  }
+  return list;
 };
 
 const resetScores = () => {

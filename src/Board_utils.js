@@ -288,18 +288,18 @@ const longestPath = (
   depth++;
   let path = { x: colIndex, y: rowIndex, depth };
   let tile = gridData[rowIndex][colIndex];
-  if (list && list.length > 0)
-    console.log({
-      length: list.length,
-      list: list.map(thing => {
-        return {
-          x: thing.x,
-          y: thing.y,
-          depth: thing.depth,
-          source: thing.source
-        };
-      })
-    });
+  // if (list && list.length > 0)
+  //   console.log({
+  //     length: list.length,
+  //     list: list.map(thing => {
+  //       return {
+  //         x: thing.x,
+  //         y: thing.y,
+  //         depth: thing.depth,
+  //         source: thing.source
+  //       };
+  //     })
+  //   });
 
   if (!tile) {
     //  console.log(rowIndex + ":" + colIndex, "No tile found");
@@ -307,9 +307,9 @@ const longestPath = (
   }
 
   if (rowIndex < 1 || rowIndex > 7 || colIndex < 1 || colIndex > 7) {
-    path.end = "edge-connection";
+    // path.end = "edge-connection";
     //   console.log(rowIndex + ":" + colIndex, "Found edge connection");
-    return { path: null, list: list };
+    return { path: "edge-connection:" + colIndex + ":" + rowIndex, list: list };
   }
 
   if (
@@ -378,8 +378,20 @@ const longestPath = (
       }
     }
     if (endpoints === 0) {
-      if (tile.type !== 8 && tile.type !== 9 && tile.type !== 11) {
+      if (
+        type === "road" &&
+        tile.type !== 8 &&
+        tile.type !== 9 &&
+        tile.type !== 11
+      ) {
         //console.log("Not an endpoint", colIndex, rowIndex, tile);
+        return null;
+      } else if (
+        type === "rail" &&
+        tile.type !== 8 &&
+        tile.type !== 9 &&
+        tile.type !== 10
+      ) {
         return null;
       }
     }
@@ -387,7 +399,8 @@ const longestPath = (
   let lp = null;
   //debugger;
   if (exits.match.above === type && exitFromTile(tile, "north") === type) {
-    if (source !== "above" && rowIndex > 1) {
+    if (source !== "above") {
+      // && rowIndex > 1) {
       //  console.log("found above");
       // if (rowIndex === 0) {
       //   path.push({ x: colIndex, y: rowIndex, direction: "edge-below" });
@@ -411,7 +424,8 @@ const longestPath = (
   }
   list.length = depth;
   if (exits.match.right === type && exitFromTile(tile, "east") === type) {
-    if (source !== "right" && colIndex < 7) {
+    if (source !== "right") {
+      // && colIndex < 7) { //
       // console.log("found right");
       // if (colIndex === 7) {
       //   path.push({ x: colIndex, y: rowIndex, direction: "edge-left" });
@@ -434,7 +448,8 @@ const longestPath = (
   }
   list.length = depth;
   if (exits.match.below === type && exitFromTile(tile, "south") === type) {
-    if (source !== "below" && rowIndex < 7) {
+    if (source !== "below") {
+      // && rowIndex < 7) {
       //  console.log("found below");
       // if (rowIndex === 7) {
       //   path.push({ x: colIndex, y: rowIndex, direction: "edge-above" });
@@ -457,7 +472,8 @@ const longestPath = (
   }
   list.length = depth;
   if (exits.match.left === type && exitFromTile(tile, "west") === type) {
-    if (source !== "left" && colIndex > 1) {
+    if (source !== "left") {
+      // && colIndex > 1) {
       //  console.log("found left");
       // if (colIndex === 0) {
       //   path.push({ x: colIndex, y: rowIndex, direction: "edge-right" });
@@ -473,6 +489,195 @@ const longestPath = (
         list,
         type
       );
+      path.left = lp.path;
+      list = lp.list;
+    }
+  }
+  list.length = depth;
+  //path.push({ x: colIndex, y: rowIndex, direction: "end" });
+  return { path, list };
+};
+
+const completePath = (
+  gridData,
+  rowIndex,
+  colIndex,
+  source = "",
+  depth = 0,
+  list = []
+) => {
+  depth++;
+  let path = { x: colIndex, y: rowIndex, depth };
+  let tile = gridData[rowIndex][colIndex];
+  // if (list && list.length > 0)
+  //   console.log({
+  //     length: list.length,
+  //     list: list.map(thing => {
+  //       return {
+  //         x: thing.x,
+  //         y: thing.y,
+  //         depth: thing.depth,
+  //         source: thing.source
+  //       };
+  //     })
+  //   });
+
+  if (!tile) {
+    //  console.log(rowIndex + ":" + colIndex, "No tile found");
+    return { path: null, list: list };
+  }
+
+  if (rowIndex < 1 || rowIndex > 7 || colIndex < 1 || colIndex > 7) {
+    // path.end = "edge-connection:" + colIndex + ":" + rowIndex;
+    //   console.log(rowIndex + ":" + colIndex, "Found edge connection");
+    return { path: "edge-connection:" + colIndex + ":" + rowIndex, list: list };
+  }
+
+  if (
+    list.filter(cell => cell.x === colIndex && cell.y === rowIndex).length > 0
+  ) {
+    // console.log(rowIndex + ":" + colIndex, "Found previously visited tile");
+    return { path: null, list: list };
+  }
+
+  let exits = isValid(
+    colIndex,
+    rowIndex,
+    tile.type,
+    tile.rotation,
+    tile.flipped,
+    "yes",
+    gridData
+  );
+
+  if (!exits) {
+    return { path: null, list: list };
+  }
+
+  list.push({ x: colIndex, y: rowIndex, depth, source });
+
+  list.length = depth;
+
+  // if (depth === 1) {
+  //   let endpoints = 0;
+  //   if (
+  //     exitFromTile(tile, "north") === "road" ||
+  //     exitFromTile(tile, "north") === "rail"
+  //   )  {
+  //     if (exits.match.above === type && rowIndex === 1) {
+  //       //  console.log("Found connection north:", colIndex, rowIndex, tile);
+  //       endpoints++;
+  //     } else if (exits.match.above !== exitFromTile(tile, "north")) {
+  //       //  console.log("Found end north:", colIndex, rowIndex, tile);
+  //       endpoints++;
+  //     }
+  //   }
+
+  //   if (
+  //     exitFromTile(tile, "east") === "road" ||
+  //     exitFromTile(tile, "east") === "rail"
+  //   )  {
+  //     if (exits.match.right === type && colIndex === 7) {
+  //       //  console.log("Found connection east:", colIndex, rowIndex, tile);
+  //       endpoints++;
+  //     } else if (exits.match.right !== exitFromTile(tile, "east")) {
+  //       //  console.log("Found end east:", colIndex, rowIndex, tile);
+  //       endpoints++;
+  //     }
+  //   }
+
+  //   if (
+  //     exitFromTile(tile, "south") === "road" ||
+  //     exitFromTile(tile, "south") === "rail"
+  //   ) {
+  //     if (
+  //       (exits.match.below === "road" || exits.match.below === "rail") &&
+  //       rowIndex === 7
+  //     ) {
+  //       //  console.log("Found connection south:", colIndex, rowIndex, tile);
+  //       endpoints++;
+  //     } else if (exits.match.below !== exitFromTile(tile, "south")) {
+  //       //  console.log("Found end south:", colIndex, rowIndex, tile);
+  //       endpoints++;
+  //     }
+  //   }
+  //   if (
+  //     exitFromTile(tile, "west") === "road" ||
+  //     exitFromTile(tile, "west") === "rail"
+  //   ) {
+  //     if (
+  //       (exits.match.left === "road" || exits.match.left === "rail") &&
+  //       colIndex === 1
+  //     ) {
+  //       //  console.log("Found connection west:", colIndex, rowIndex, tile);
+  //       endpoints++;
+  //     } else if (exits.match.left !== exitFromTile(tile, "west")) {
+  //       // console.log("Found end west:", colIndex, rowIndex, tile);
+  //       endpoints++;
+  //     }
+  //   }
+  // }
+  let lp = null;
+  //debugger;
+  if (exits.match.above === exitFromTile(tile, "north")) {
+    if (source !== "above") {
+      // && rowIndex > 1) {
+      //  console.log("found above");
+      // if (rowIndex === 0) {
+      //   path.push({ x: colIndex, y: rowIndex, direction: "edge-below" });
+      //   return path;
+      // }
+      //path.push({ x: colIndex, y: rowIndex, direction: "below" });
+
+      lp = completePath(gridData, rowIndex - 1, colIndex, "below", depth, list);
+
+      path.above = lp.path;
+      list = lp.list;
+    }
+  }
+  list.length = depth;
+  if (exits.match.right === exitFromTile(tile, "east")) {
+    if (source !== "right") {
+      // && colIndex < 7) { //
+      // console.log("found right");
+      // if (colIndex === 7) {
+      //   path.push({ x: colIndex, y: rowIndex, direction: "edge-left" });
+      //   return path;
+      // }
+      // path.push({ x: colIndex, y: rowIndex, direction: "left" });
+      lp = completePath(gridData, rowIndex, colIndex + 1, "left", depth, list);
+
+      path.right = lp.path;
+      list = lp.list;
+    }
+  }
+  list.length = depth;
+  if (exits.match.below === exitFromTile(tile, "south")) {
+    if (source !== "below") {
+      // && rowIndex < 7) {
+      //  console.log("found below");
+      // if (rowIndex === 7) {
+      //   path.push({ x: colIndex, y: rowIndex, direction: "edge-above" });
+      //   return path;
+      // }
+      // path.push({ x: colIndex, y: rowIndex, direction: "above" });
+      lp = completePath(gridData, rowIndex + 1, colIndex, "above", depth, list);
+
+      path.below = lp.path;
+      list = lp.list;
+    }
+  }
+  list.length = depth;
+  if (exits.match.left === exitFromTile(tile, "west")) {
+    if (source !== "left") {
+      // && colIndex > 1) {
+      //  console.log("found left");
+      // if (colIndex === 0) {
+      //   path.push({ x: colIndex, y: rowIndex, direction: "edge-right" });
+      //   return path;
+      // }
+      // path.push({ x: colIndex, y: rowIndex, direction: "right" });
+      lp = completePath(gridData, rowIndex, colIndex - 1, "right", depth, list);
       path.left = lp.path;
       list = lp.list;
     }
@@ -827,5 +1032,6 @@ export {
   findEndPoints,
   longestRoad,
   longestRail,
-  longestPath
+  longestPath,
+  completePath
 };
