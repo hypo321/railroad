@@ -919,8 +919,8 @@ const gridPath = [
 ];
 
 // let gridData = fullGrid;
-//let gridData = blankGrid;
-let gridData = gridPath;
+let gridData = blankGrid;
+//let gridData = gridPath;
 
 let connectingExits = gridData
   .map((row, rowIndex) =>
