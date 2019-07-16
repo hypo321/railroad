@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/railroad/static/css/main.56a39505.chunk.css",
+    "main.js": "/railroad/static/js/main.fe5ac2be.chunk.js",
+    "main.js.map": "/railroad/static/js/main.fe5ac2be.chunk.js.map",
+    "runtime~main.js": "/railroad/static/js/runtime~main.813a5b15.js",
+    "runtime~main.js.map": "/railroad/static/js/runtime~main.813a5b15.js.map",
+    "static/js/2.30172c4d.chunk.js": "/railroad/static/js/2.30172c4d.chunk.js",
+    "static/js/2.30172c4d.chunk.js.map": "/railroad/static/js/2.30172c4d.chunk.js.map",
+    "index.html": "/railroad/index.html",
+    "precache-manifest.f623b3913658aaacd597533c2e044d9e.js": "/railroad/precache-manifest.f623b3913658aaacd597533c2e044d9e.js",
+    "service-worker.js": "/railroad/service-worker.js",
+    "static/css/main.56a39505.chunk.css.map": "/railroad/static/css/main.56a39505.chunk.css.map"
+  }
+}
