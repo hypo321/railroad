@@ -99,7 +99,7 @@ const updateScores = (gridData, setState) => {
           )
             .sort()
             .filter(function(item, pos, ary) {
-              return !pos || item != ary[pos - 1];
+              return !pos || item !== ary[pos - 1];
             });
         })
         .filter(cell => cell.length > 1);
@@ -112,7 +112,7 @@ const updateScores = (gridData, setState) => {
     //console.log(cleanPaths);
 
     let noDupes = cleanPaths.sort().filter(function(item, pos, ary) {
-      return !pos || item != ary[pos - 1];
+      return !pos || item !== ary[pos - 1];
     });
 
     let splitArray = noDupes.map(item => item.split(","));

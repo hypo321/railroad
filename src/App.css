@@ -66,7 +66,7 @@ body {
 canvas {
   width: 600px;
   height: 900px;
-  background-image: url("/images/RRI-board.png");
+  background-image: url("../../images/RRI-board.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -74,8 +74,8 @@ canvas {
 
 span.roundNumber {
   position: absolute;
-  top: 0.1em;
-  right: 0.5em;
+  top: 0em;
+  right: 0.3em;
   z-index: 3;
   color: red;
   font-family: "Cabin", sans-serif;
@@ -84,6 +84,7 @@ span.roundNumber {
 }
 
 span.above {
+  display: none;
   position: absolute;
   top: -0.5em;
   left: 25%;
@@ -93,6 +94,7 @@ span.above {
   font-size: 2em;
 }
 span.below {
+  display: none;
   position: absolute;
   bottom: -0.5em;
   left: 25%;
@@ -102,6 +104,7 @@ span.below {
   font-size: 2em;
 }
 span.right {
+  display: none;
   position: absolute;
   top: 10%;
   right: -0.4em;
@@ -111,6 +114,7 @@ span.right {
   font-size: 2em;
 }
 span.left {
+  display: none;
   position: absolute;
   top: 10%;
   left: -0.4em;
@@ -146,7 +150,8 @@ span.left {
 
 .validCell {
   /* border: 1px solid green; */
-  filter: sepia(90%) hue-rotate(50deg) saturate(400%);
+  background-color: rgba(55, 245, 55, 0.4);
+  /* filter: sepia(90%) hue-rotate(50deg) saturate(400%); */
   display: inline-block;
   border-radius: 12px;
 }
@@ -283,50 +288,50 @@ button {
 
 .tile10 {
   left: 74px;
-  background-image: url("/images/RRI-10.png");
+  background-image: url("../../images/RRI-10.png");
 }
 
 .tile11 {
   left: 169px;
-  background-image: url("/images/RRI-11.png");
+  background-image: url("../../images/RRI-11.png");
 }
 
 .tile12 {
   left: 261px;
-  background-image: url("/images/RRI-12.png");
+  background-image: url("../../images/RRI-12.png");
 }
 
 .tile13 {
   left: 355px;
-  background-image: url("/images/RRI-13.png");
+  background-image: url("../../images/RRI-13.png");
 }
 
 .tile14 {
   left: 448px;
-  background-image: url("/images/RRI-14.png");
+  background-image: url("../../images/RRI-14.png");
 }
 
 .tile15 {
   left: 542px;
-  background-image: url("/images/RRI-15.png");
+  background-image: url("../../images/RRI-15.png");
 }
 
 .tile16 {
   left: 500px;
-  background-image: url("/images/RRI-6.png");
+  background-image: url("../../images/RRI-6.png");
 }
 
 .tile7 {
   left: 443px;
-  background-image: url("/images/RRI-7.png");
+  background-image: url("../../images/RRI-7.png");
 }
 
 .tile8 {
   left: 504px;
-  background-image: url("/images/RRI-8.png");
+  background-image: url("../../images/RRI-8.png");
 }
 
 .tile9 {
   left: 567px;
-  background-image: url("/images/RRI-9.png");
+  background-image: url("../../images/RRI-9.png");
 }

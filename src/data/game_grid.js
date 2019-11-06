@@ -1,6 +1,8 @@
 import { edge, regularTile } from "../Tile_utils";
 
-const fullGrid = [
+regularTile(4, 180, false);
+
+/* const fullGrid = [
   [
     null,
     {
@@ -329,8 +331,8 @@ const fullGrid = [
     null
   ]
 ];
-
-const testgridData = [
+ */
+/* const testgridData = [
   [
     null,
     edge("top", "blank"),
@@ -435,7 +437,7 @@ const testgridData = [
     null
   ]
 ];
-
+ */
 const blankGrid = [
   [
     null,
@@ -539,7 +541,7 @@ const blankGrid = [
   ]
 ];
 
-const gridPath = [
+/* const gridPath = [
   [
     null,
     {
@@ -917,10 +919,270 @@ const gridPath = [
     null
   ]
 ];
+ */
+/* const buggyGrid = [
+  [
+    null,
+    {
+      type: 18,
+      rotation: 0,
+      flipped: false
+    },
+    {
+      type: 16,
+      rotation: -90,
+      flipped: false
+    },
+    {
+      type: 18,
+      rotation: 0,
+      flipped: false
+    },
+    {
+      type: 17,
+      rotation: 180,
+      flipped: false
+    },
+    {
+      type: 18,
+      rotation: 0,
+      flipped: false
+    },
+    {
+      type: 16,
+      rotation: -90,
+      flipped: false
+    },
+    {
+      type: 18,
+      rotation: 0,
+      flipped: false
+    },
+    null
+  ],
+  [
+    {
+      type: 18,
+      rotation: 270,
+      flipped: false
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      type: 18,
+      rotation: 90,
+      flipped: false
+    }
+  ],
+  [
+    {
+      type: 17,
+      rotation: 450,
+      flipped: false
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      type: 1,
+      rotation: 180,
+      flipped: false,
+      round: 2
+    },
+    {
+      type: 3,
+      rotation: 270,
+      flipped: false,
+      round: 1
+    },
+    {
+      type: 17,
+      rotation: 270,
+      flipped: false
+    }
+  ],
+  [
+    {
+      type: 18,
+      rotation: 270,
+      flipped: false
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      type: 18,
+      rotation: 90,
+      flipped: false
+    }
+  ],
+  [
+    {
+      type: 16,
+      rotation: 180,
+      flipped: false
+    },
+    null,
+    null,
+    null,
+    null,
+    {
+      type: 4,
+      rotation: 180,
+      flipped: false,
+      round: 2
+    },
+    {
+      type: 6,
+      rotation: 270,
+      flipped: false,
+      round: 1
+    },
+    {
+      type: 5,
+      rotation: 180,
+      flipped: false,
+      round: 1
+    },
+    {
+      type: 16,
+      rotation: 0,
+      flipped: false
+    }
+  ],
+  [
+    {
+      type: 18,
+      rotation: 270,
+      flipped: false
+    },
+    null,
+    null,
+    null,
+    {
+      type: 8,
+      rotation: 270,
+      flipped: false,
+      round: 2
+    },
+    {
+      type: 5,
+      rotation: 270,
+      flipped: false,
+      round: 2
+    },
+    null,
+    {
+      type: 8,
+      rotation: 180,
+      flipped: false,
+      round: 1
+    },
+    {
+      type: 18,
+      rotation: 90,
+      flipped: false
+    }
+  ],
+  [
+    {
+      type: 17,
+      rotation: 450,
+      flipped: false
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      type: 1,
+      rotation: 90,
+      flipped: false,
+      round: 3
+    },
+    {
+      type: 17,
+      rotation: 270,
+      flipped: false
+    }
+  ],
+  [
+    {
+      type: 18,
+      rotation: 270,
+      flipped: false
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      type: 18,
+      rotation: 90,
+      flipped: false
+    }
+  ],
+  [
+    null,
+    {
+      type: 18,
+      rotation: 180,
+      flipped: false
+    },
+    {
+      type: 16,
+      rotation: 90,
+      flipped: false
+    },
+    {
+      type: 18,
+      rotation: 180,
+      flipped: false
+    },
+    {
+      type: 17,
+      rotation: 360,
+      flipped: false
+    },
+    {
+      type: 18,
+      rotation: 180,
+      flipped: false
+    },
+    {
+      type: 16,
+      rotation: 90,
+      flipped: false
+    },
+    {
+      type: 18,
+      rotation: 180,
+      flipped: false
+    },
+    null
+  ]
+]; */
 
 // let gridData = fullGrid;
-let gridData = blankGrid;
+//let gridData = buggyGrid;
 //let gridData = gridPath;
+let gridData = blankGrid;
 
 let connectingExits = gridData
   .map((row, rowIndex) =>

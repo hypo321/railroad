@@ -47,14 +47,7 @@ class Board extends Component {
             placeTile={this.props.placeTile}
             gridData={this.props.gridData}
             gridDataShadow={this.props.gridDataShadow}
-            isValid={this.props.isValid}
-            selectedTile={this.props.selectedTile}
           />
-          {/* <img
-            className="BoardBackground"
-            src={"/images/RRI-board.png"}
-            alt="board"
-          /> */}
         </div>
       </div>
     );
@@ -67,9 +60,6 @@ class Grid extends Component {
     let gridDataShadow = this.props.gridDataShadow;
     let endPoints = this.props.endPoints;
 
-    // let tileRotate = 0;
-    // let tileFlipped = false;
-    // let testTile = this.props.selectedTile;
     return (
       <div className="Grid">
         <div className="gridDiv">
@@ -87,7 +77,7 @@ class Grid extends Component {
                   if (tile === null) {
                     if (gridDataShadow[rowIndex][colIndex]) {
                       let shadowTile = gridDataShadow[rowIndex][colIndex];
-                      //console.log(shadowTile);
+
                       let shadowRotation = shadowTile.rotation;
                       let shadowFlipped = shadowTile.flipped;
                       let transformString = shadowFlipped
@@ -100,7 +90,6 @@ class Grid extends Component {
                         >
                           <img
                             onClick={event => {
-                              //console.log(shadowTile);
                               this.props.placeTile(rowIndex, colIndex);
                             }}
                             key={"img:" + rowIndex + ":" + colIndex}
@@ -122,16 +111,12 @@ class Grid extends Component {
                     } else {
                       return (
                         <div
-                          // onClick={() =>
-                          //   this.props.rotateTile(rowIndex, colIndex)
-                          // }
                           key={rowIndex + ":" + colIndex}
                           className={"gridCell"}
                         />
                       );
                     }
                   } else {
-                    //console.log(gridData);
                     let tileFlipped = tile.flipped;
                     let tileRotation = tile.rotation;
                     let transformString = tileFlipped
@@ -220,42 +205,6 @@ class Grid extends Component {
 }
 
 class Tile extends Component {
-  // dragMouseDown = e => {
-  //   e = e || window.event;
-  //   //console.log(e.target.offsetLeft);
-  //   e.preventDefault();
-  //   // get the mouse cursor position at startup:
-  //   this.posX2 = e.clientX;
-  //   this.posY2 = e.clientY;
-  //   console.log(this.posX2, this.posY2);
-  //   document.onmouseup = this.closeDragElement;
-  //   // call a function whenever the cursor moves:
-  //   document.onmousemove = this.elementDrag;
-  // };
-
-  // elementDrag = e => {
-  //   e = e || window.event;
-
-  //   e.preventDefault();
-  //   // calculate the new cursor position:
-  //   this.posX1 = this.posX2 - e.clientX;
-  //   this.posY1 = this.posY2 - e.clientY;
-  //   this.posX2 = e.clientX;
-  //   this.posY2 = e.clientY;
-  //   let newTop = e.target.offsetTop - this.posY1 + "px";
-  //   let newLeft = e.target.offsetLeft - this.posX1 + "px";
-  //   //set the element's new position:
-  //   this.setState({
-  //     pos: { left: newLeft, top: newTop }
-  //   });
-  // };
-
-  // closeDragElement = () => {
-  //   // stop moving when mouse button is released:
-  //   document.onmouseup = null;
-  //   document.onmousemove = null;
-  // };
-
   render() {
     return (
       <div
