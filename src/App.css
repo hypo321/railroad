@@ -66,7 +66,7 @@ body {
 canvas {
   width: 600px;
   height: 900px;
-  background-image: url("../../images/RRI-board.png");
+  background-image: url("./images/RRI-board.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -288,50 +288,50 @@ button {
 
 .tile10 {
   left: 74px;
-  background-image: url("../../images/RRI-10.png");
+  background-image: url("./images/RRI-10.png");
 }
 
 .tile11 {
   left: 169px;
-  background-image: url("../../images/RRI-11.png");
+  background-image: url("./images/RRI-11.png");
 }
 
 .tile12 {
   left: 261px;
-  background-image: url("../../images/RRI-12.png");
+  background-image: url("./images/RRI-12.png");
 }
 
 .tile13 {
   left: 355px;
-  background-image: url("../../images/RRI-13.png");
+  background-image: url("./images/RRI-13.png");
 }
 
 .tile14 {
   left: 448px;
-  background-image: url("../../images/RRI-14.png");
+  background-image: url("./images/RRI-14.png");
 }
 
 .tile15 {
   left: 542px;
-  background-image: url("../../images/RRI-15.png");
+  background-image: url("./images/RRI-15.png");
 }
 
 .tile16 {
   left: 500px;
-  background-image: url("../../images/RRI-6.png");
+  background-image: url("./images/RRI-6.png");
 }
 
 .tile7 {
   left: 443px;
-  background-image: url("../../images/RRI-7.png");
+  background-image: url("./images/RRI-7.png");
 }
 
 .tile8 {
   left: 504px;
-  background-image: url("../../images/RRI-8.png");
+  background-image: url("./images/RRI-8.png");
 }
 
 .tile9 {
   left: 567px;
-  background-image: url("../../images/RRI-9.png");
+  background-image: url("./images/RRI-9.png");
 }

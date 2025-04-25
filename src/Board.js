@@ -1,4 +1,11 @@
 import React, { Component } from "react";
+// Dynamically load transparent tile images
+const transparentImages = require.context(
+  "./images/transparent",
+  false,
+  /\.png$/
+);
+
 //import Canvas from "./canvas";
 
 class Board extends Component {
@@ -97,11 +104,7 @@ class Grid extends Component {
                               "From Shadow x:" + rowIndex + ", y:" + colIndex
                             }
                             className={"imgBlank validCell"}
-                            src={
-                              "/images/transparent/RRI-" +
-                              shadowTile.tile +
-                              ".png"
-                            }
+                            src={transparentImages(`./RRI-${shadowTile.tile}.png`)}
                             style={{
                               transform: transformString
                             }}
@@ -188,7 +191,7 @@ class Grid extends Component {
                           style={{
                             transform: transformString
                           }}
-                          src={"/images/transparent/RRI-" + tile.type + ".png"}
+                          src={transparentImages(`./RRI-${tile.type}.png`)}
                         />
                         {deadEnds}
                       </div>
